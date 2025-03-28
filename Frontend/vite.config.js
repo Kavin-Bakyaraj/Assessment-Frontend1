@@ -4,7 +4,7 @@ import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   build: {
-    outDir: 'build',
+    outDir: 'dist',
   },
   plugins: [react(),svgr()],
   assetsInclude: ["**/*.xlsx"],
