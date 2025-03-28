@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Apply Manrope as default font */
+body {
+  font-family: 'NunitoSans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+
+.loader-circle {
+  width: 64px;
+  height: 64px;
+  border: 8px solid rgba(0, 0, 255, 0.3); /* Light blue */
+  border-top-color: #3b82f6; /* Blue for top border */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-message {
+  margin-top: 16px;
+  font-size: 1.25rem;
+  color: #555;
+  font-weight: 600;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 0.8s infinite;
+}
+
+.loader .loading-ring {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid yellow;
+  border-radius: 50%;
+  border-top: 3px solid transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+
+.test-filter {
+  -webkit-appearance: none;
+  color: #B6B6B6;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+.fixed-section {
+  position: sticky;
+  top: 0;
+  right: 0;
+  width: 25%; /* 1/4 of the width */
+  height: 100vh; /* Full viewport height */
+  background: white;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.scrollable-content {
+  width: 75%; /* 3/4 of the width */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+//* Webkit browsers */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3498db;        /* Thumb color */
+  border-radius: 20px;
+  border: 3px dotted #ffffff; /* Dotted thumb border */
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2980b9;        /* Darker blue on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #111933 #f1f1f1;
+}
+
+/* Customizing calendar style to remove scrollbar */
+.MuiMultiSectionDigitalClockSection-root {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .min-h-screen {
+    padding: 1rem;
+  }
+
+  .px-4.md\:px-20 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex-col.md\:flex-row {
+    flex-direction: column;
+  }
+
+  .flex-1.flex.flex-col.items-stretch.rounded-lg.text-[#111933].gap-4 {
+    margin-bottom: 1rem;
+  }
+
+  .flex.flex-col.items-stretch.gap-4 {
+    margin-bottom: 1rem;
+  }
+
+  .flex.flex-col.flex-1 {
+    margin-bottom: 1rem;
+  }
+
+  .flex.p-6.shadow-md.flex-1.bg-[#ffffff].rounded-lg {
+    padding: 1rem;
+  }
+
+  .border-t.p-6.mt-2.w-full.flex.items-stretch.border-gray-400 {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .flex.flex-col.items-center.flex-1.border-r.border-gray-400 {
+    border-right: none;
+    border-bottom: 1px solid #cbd2d9;
+    margin-bottom: 1rem;
+  }
+
+  .flex.justify-between.items-center.mt-4 {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .w-1\/4.flex.justify-end.items-center {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .bg-white.rounded-lg.shadow-md.p-6.mb-6 {
+    padding: 1rem;
+  }
+
+  .border.rounded-lg.w-full.border-gray-400 {
+    overflow-x: auto;
+  }
+
+  .min-w-full.bg-transparent.rounded-lg.overflow-hidden {
+    width: 100%;
+  }
+
+  .relative.font-normal.py-3.my-2.px-6.text-center {
+    padding: 0.5rem;
+  }
+
+  .py-3.px-6.text-center {
+    padding: 0.5rem;
+  }
+}
