@@ -29,7 +29,7 @@ export default function SectionBasedMcqAssessment() {
   const navigate = useNavigate();
   const [timingType, setTimingType] = useState("Section");
   const API_BASE_URL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+    import.meta.env.VITE_API_BASE_URL || "https://assessmentbackend-production.up.railway.app";
   const [sections, setSections] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState(() => {
     const storedAnswers = sessionStorage.getItem(
