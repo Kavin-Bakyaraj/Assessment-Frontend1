@@ -33,7 +33,7 @@ const TestInstructions = () => {
   const { assessment_type } = location.state || {};
   const [loading, setLoading] = useState(false);
   const API_BASE_URL =
-    import.meta.env.REACT_APP_API_BASE_URL || "http://localhost:8000";
+    import.meta.env.REACT_APP_API_BASE_URL || "https://assessmentbackend-production.up.railway.app";
 
   const testConfiguration = {
     questions: 25,
