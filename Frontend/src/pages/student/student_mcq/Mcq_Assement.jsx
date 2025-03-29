@@ -24,7 +24,7 @@ export default function Mcq_Assessment() {
   const [currentTest, setCurrentTest] = useState(null);
   const navigate = useNavigate();
   const API_BASE_URL =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+    import.meta.env.VITE_API_BASE_URL || "https://assessmentbackend-production.up.railway.app";
   const [questions, setQuestions] = useState([]);
   const [selectedAnswers, setSelectedAnswers] = useState(() => {
     const storedAnswers = sessionStorage.getItem(
