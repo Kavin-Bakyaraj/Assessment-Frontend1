@@ -71,6 +71,8 @@ const StaffProfile = () => {
 
   // Combined fetch profile function that only runs once
 // Update fetchProfileData to implement proper caching
+// Update the fetchProfileData function (around line 109)
+
 const fetchProfileData = useCallback(async () => {
   // If fetch is in progress, don't fetch again
   if (fetchInProgress.current) return;
@@ -105,13 +107,20 @@ const fetchProfileData = useCallback(async () => {
       }
     }
     
-    // Make API call to get fresh data
+    // Get the JWT token from localStorage
+    const staffToken = localStorage.getItem('staffToken');
+    
+    // Make API call to get fresh data with Authorization header
     const response = await axios.get(`${API_BASE_URL}/api/staff/profile/`, {
       withCredentials: true,
+      headers: {
+        'Authorization': `Bearer ${staffToken}`
+      }
     });
 
     if (!isMounted.current) return;
 
+    // Rest of function remains the same...
     // Update profile state
     setProfile(response.data);
     
