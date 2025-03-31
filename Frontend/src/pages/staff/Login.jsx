@@ -80,7 +80,7 @@ const [lockoutTimer, setLockoutTimer] = useState(null);
       const response = await axios.post(
         `${API_BASE_URL}/api/staff/login/`,
         { email: formData.email, password: formData.password },
-        { withCredentials: true } // Include credentials if needed
+        { withCredentials: true } // Include credentials to receive cookies
       );
   
       console.log("Server Response:", response.data); // Debugging
@@ -96,16 +96,15 @@ const [lockoutTimer, setLockoutTimer] = useState(null);
       const username = response.data.name;
       const profileImage = response.data.profileImage;
   
-      // Store token in cookies
-      Cookies.set("staffToken", jwt, { expires: 7 });
-      Cookies.set("username", username, { expires: 7 });
-  
-      // Store token in localStorage (for additional security)
+      // Store token in localStorage
       localStorage.setItem("staffToken", jwt);
+      
+      // Verify cookies were received
+      console.log("Cookies received:", document.cookie);
   
-      console.log("Stored Token (Cookie):", Cookies.get("staffToken"));
-      console.log("Stored Token (LocalStorage):", localStorage.getItem("staffToken"));
-  
+      // Store username in both cookie and localStorage for redundancy
+      localStorage.setItem("username", username);
+      
       // Store profile image (base64 or URL)
       if (profileImage) {
         if (profileImage.startsWith("data:image/")) {
@@ -120,6 +119,7 @@ const [lockoutTimer, setLockoutTimer] = useState(null);
       // Show success toast & navigate after ensuring storage
       toast.success("Login successful!");
       setTimeout(() => navigate("/staffdashboard"), 500);
+  
   
     } catch (error) {
       // Handle account lockout (status code 429)
