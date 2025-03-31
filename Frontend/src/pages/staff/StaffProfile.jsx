@@ -107,20 +107,25 @@ const fetchProfileData = useCallback(async () => {
       }
     }
     
-    // Get the JWT token from localStorage
+    // Get tokens from both sources
     const staffToken = localStorage.getItem('staffToken');
-    
-    // Make API call to get fresh data with Authorization header
+    const jwtCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('jwt='))
+      ?.split('=')[1];
+
+    // Use axios to make the request with both auth methods
     const response = await axios.get(`${API_BASE_URL}/api/staff/profile/`, {
-      withCredentials: true,
+      withCredentials: true, // Important: Send cookies with request
       headers: {
-        'Authorization': `Bearer ${staffToken}`
+        'Authorization': staffToken ? `Bearer ${staffToken}` : '',
       }
     });
 
     if (!isMounted.current) return;
-
-    // Rest of function remains the same...
+    
+    console.log("Profile API response:", response.data);
+    
     // Update profile state
     setProfile(response.data);
     
@@ -147,9 +152,11 @@ const fetchProfileData = useCallback(async () => {
   } catch (err) {
     console.error("Failed to fetch staff profile data:", err);
     
-    // If we get a rate limit response, log it
-    if (err.response?.status === 429) {
-      console.warn("Rate limited by the API - using cached data if available");
+    // If we get a 401 error, the JWT might be expired or invalid
+    if (err.response?.status === 401) {
+      console.error("Authentication error - user might need to login again");
+      // Optionally redirect to login page
+      // window.location.href = '/stafflogin';
     }
     
     // Try to load from localStorage as fallback if we haven't already
@@ -170,10 +177,13 @@ const fetchProfileData = useCallback(async () => {
   }
 }, [API_BASE_URL, loadProfilePicture]);
 
+
   useEffect(() => {
     // Set isMounted to true when component mounts
     isMounted.current = true;
-    
+    // Add to StaffProfile.jsx for debugging
+
+// Call this in useEffect or add a debug button
     // Fetch profile data when component mounts
     fetchProfileData();
     
