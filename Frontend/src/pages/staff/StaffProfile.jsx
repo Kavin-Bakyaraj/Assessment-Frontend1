@@ -73,6 +73,8 @@ const StaffProfile = () => {
 // Update fetchProfileData to implement proper caching
 // Update the fetchProfileData function (around line 109)
 
+
+
 const fetchProfileData = useCallback(async () => {
   // If fetch is in progress, don't fetch again
   if (fetchInProgress.current) return;
@@ -209,6 +211,61 @@ const fetchProfileData = useCallback(async () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, [fetchProfileData, loadProfilePicture]);
+
+
+  // Add this function to your component
+
+// Add near the top after state declarations
+const debugTokens = () => {
+  // Get tokens from different sources
+  const localStorageToken = localStorage.getItem('staffToken');
+  
+  // Parse cookies to get jwt
+  const getCookie = (name) => {
+    const cookies = document.cookie.split(';')
+      .map(cookie => cookie.trim().split('='))
+      .reduce((acc, [key, value]) => ({...acc, [key]: value}), {});
+    return cookies[name];
+  };
+  
+  const jwtCookie = getCookie('jwt');
+  
+  console.log("======== TOKEN DEBUG ========");
+  console.log("localStorage token:", localStorageToken ? 
+               `${localStorageToken.substring(0, 15)}...` : "Not found");
+  console.log("jwt cookie:", jwtCookie ? 
+               `${jwtCookie.substring(0, 15)}...` : "Not found");
+  console.log("All cookies:", document.cookie);
+
+  // Return useful info
+  return {
+    hasLocalStorageToken: !!localStorageToken,
+    hasJwtCookie: !!jwtCookie,
+    cookiesPresent: document.cookie
+  };
+};
+
+// Add inside useEffect
+useEffect(() => {
+  // Set isMounted to true when component mounts
+  isMounted.current = true;
+  
+  // Debug tokens before fetching profile
+  const tokenStatus = debugTokens();
+  console.log("Token status:", tokenStatus);
+
+  // If no JWT cookie but have localStorage token, set cookie
+  if (!tokenStatus.hasJwtCookie && tokenStatus.hasLocalStorageToken) {
+    const token = localStorage.getItem('staffToken');
+    document.cookie = `jwt=${token}; path=/; max-age=86400; samesite=none; secure`;
+    console.log("Set missing JWT cookie from localStorage");
+  }
+
+  // Fetch profile data after token check
+  fetchProfileData();
+  
+  // Rest of your existing useEffect code...
+}, [fetchProfileData, loadProfilePicture]);
 
   // Handle image load
   const handleImageLoad = () => {
