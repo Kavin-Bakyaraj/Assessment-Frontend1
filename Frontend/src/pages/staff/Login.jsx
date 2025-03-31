@@ -83,7 +83,7 @@ const [lockoutTimer, setLockoutTimer] = useState(null);
         { withCredentials: true } // Include credentials to receive cookies
       );
   
-      console.log("Server Response:", response.data); // Debugging
+      console.log("Server Response:", response.data);
   
       // Ensure tokens exist in response
       if (!response.data.tokens || !response.data.tokens.jwt) {
@@ -99,10 +99,11 @@ const [lockoutTimer, setLockoutTimer] = useState(null);
       // Store token in localStorage
       localStorage.setItem("staffToken", jwt);
       
-      // Verify cookies were received
-      console.log("Cookies received:", document.cookie);
+      // CRITICAL FIX: Also set as cookie directly for cross-domain compatibility
+      document.cookie = `jwt=${jwt}; path=/; max-age=86400; samesite=none; secure`;
+      console.log("Manually set jwt cookie:", jwt.substring(0, 15) + "...");
   
-      // Store username in both cookie and localStorage for redundancy
+      // Store username in localStorage for redundancy
       localStorage.setItem("username", username);
       
       // Store profile image (base64 or URL)
@@ -119,7 +120,6 @@ const [lockoutTimer, setLockoutTimer] = useState(null);
       // Show success toast & navigate after ensuring storage
       toast.success("Login successful!");
       setTimeout(() => navigate("/staffdashboard"), 500);
-  
   
     } catch (error) {
       // Handle account lockout (status code 429)
