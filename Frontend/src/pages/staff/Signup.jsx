@@ -271,7 +271,7 @@ export default function Signup() {
                     className="block w-full rounded-xl border border-gray-200 bg-blue-50 py-3 px-4 text-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                   >
                     <option value="">Select Role</option>
-                    <option value="Super Admin">Super Admin</option>
+                    <option value="Admin">Super Admin</option>
                     <option value="Principal">Prinicipal</option>
                     <option value="HOD">Head Of the Department</option>
                     <option value="Staff">Staff</option>
